@@ -1,0 +1,18 @@
+:root {
+    --primary: #3B82F6;
+    --primary-light: #DBEAFE;
+    --primary-dark: #1E3A8A;
+    --background: #F9FAFB;
+    --success: #D1FAE5;
+    --success-text: #065F46;
+    --error: #FEE2E2;
+    --error-text: #B91C1C;
+}
+
+/* General styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
