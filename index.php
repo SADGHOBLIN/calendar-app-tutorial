@@ -15,13 +15,11 @@
     <header>
         <!-- Header section -->
         <h1><i class="fa-regular fa-calendar"></i> Calendar</h1>
-
+    </header>
         <!-- Clock -->
-        <div id="clock-container">
+        <div class="clock-container">
             <div id="clock"></div>
         </div>
-
-    </header>
 
     <main>
         <!-- Calendar section-->
@@ -29,7 +27,7 @@
             <!-- Nav buttons -->
             <div class="nav-btn-container">
                     <button class="nav-btn"><i class="fa-regular fa-square-caret-left"></i></button>
-                    <h2 id="monthYear" style="margin: 0"></h2>
+                    <h2 id="monthYear" stlye="margin: 0"></h2>
                     <button class="nav-btn"><i class="fa-regular fa-square-caret-right"></i></button>
             </div>
 
