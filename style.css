@@ -41,7 +41,6 @@ header {
     font-weight: bold;
     padding: 1rem;
     text-align: center;
-    font-family: "Inter", sans-serif;
     letter-spacing: 2px;
     border-bottom: 2px solid var(--primary);
 }
@@ -87,7 +86,7 @@ header {
     justify-content: flex-start;
     position: relative;
     cursor: pointer;
-    transition: background 0.2 ease;
+    transition: background 0.2s ease;
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 6px;
