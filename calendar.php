@@ -4,7 +4,8 @@
 include "connection.php";
 
 $successMsg = '';
-$errorMsg = ''; // $eventsFromDB = []; Init a new array to store fetched events
+$errorMsg = ''; 
+$eventsFromDB = []; // Init a new array to store fetched events
 
 // Handle Add appointment
 if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST['action'] ?? '') === "add") {
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST['action'] ?? '') === "add")
         $stmt->close();
 
         header("Location: " . $_SERVER["PHP_SELF"] . "?success=1");
+        exit;
     } else {
         header("Location: " . $_SERVER["PHP_SELF"] . "?error=1");
         exit;
@@ -48,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === 'edit'
         $stmt->execute();
         $stmt->close();
 
-        header("Location: " . $_SERVER["PHP_SELF"] . "?succes=2");
+        header("Location: " . $_SERVER["PHP_SELF"] . "?success=2");
         exit;
     } else {
         header("Location: " . $_SERVER["PHP_SELF"] . "?error=2");
@@ -73,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? '') === "delet
 // Success and Error messages
 if (isset($_GET["success"])) {
     $successMsg = match ($_GET["success"]) {
-        '1' => "Appointment added successfully." 
-        '2' => "Appointment updated successfully."
-        '3' => "Appoitment deleted successfully."
+        '1' => "Appointment added successfully.",
+        '2' => "Appointment updated successfully.",
+        '3' => "Appointment deleted successfully.",
         default => ''
     }; 
 }
@@ -86,8 +88,8 @@ if (isset($_GET["error"])) {
 // Fetch all appointments and spread over date range
 $result = $conn->query("SELECT * FROM appointments");
 
-if ($result && result->num_rows > 0) {
-    while ($row = $_result->fetch_assoc()) {
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $start = new DateTime($row["start_date"]);
         $end = new DateTime($row["end_date"]);
 
@@ -95,7 +97,7 @@ if ($result && result->num_rows > 0) {
             $eventsFromDB[] = [
                 "id" => $row["id"],
                 "title" => "{$row['course_name']} - {$row['instructor_name']}",
-                "date" => $start=>format("Y-m-d"),
+                "date" => $start->format("Y-m-d"),
                 "start" => $row["start_date"],
                 "end" => $row["end_date"]
             ];
