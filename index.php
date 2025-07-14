@@ -67,6 +67,13 @@
                         <label for="endDate">End Date:</label>
                         <input type="date" name="end_date" id="endDate" required>
 
+                        <label for="startTime">Start Time:</label>
+                        <input type="time" name="start_time" id="startTime" required>
+
+                        <label for="endTime">End Time:</label>
+                        <input type="time" name="end_time" id="endTime" required>
+                        
+
                         <button type="submit"><i class="fa-solid fa-calendar-check"></i> Save</button>
                 </form>
 
