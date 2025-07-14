@@ -1,3 +1,8 @@
+
+<?php
+include "calendar.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,9 +31,9 @@
          <div class="calendar">
             <!-- Nav buttons -->
             <div class="nav-btn-container">
-                    <button class="nav-btn"><i class="fa-regular fa-square-caret-left"></i></button>
-                    <h2 id="monthYear" stlye="margin: 0"></h2>
-                    <button class="nav-btn"><i class="fa-regular fa-square-caret-right"></i></button>
+                    <button id="prevMonthBtn" class="nav-btn"><i class="fa-regular fa-square-caret-left"></i></button>
+                    <h2 id="monthYear" style="margin: 0"></h2>
+                    <button id="nextMonthBtn" class="nav-btn"><i class="fa-regular fa-square-caret-right"></i></button>
             </div>
 
             <!-- Calendar grid -->
@@ -38,7 +43,7 @@
          </div>
 
          <!-- Modal for add/edit/delete appointment -->
-          <div id="eventModal" class="modal">
+          <div id="eventModal" class="modal" style="display:none;">
             <div class="modal-content">
 
                 <div id="eventSelectorWrapper">
@@ -53,7 +58,7 @@
                 <!-- Main form -->
                 <form method="POST" id="eventForm">
                         <input type="hidden" name="action" id="formAction" value="add">
-                        <input type="hidden" name="event_id" id="eventID">
+                        <input type="hidden" name="event_id" id="eventId">
 
                         <label for="courseName">Course Title:</label>
                         <input type="text" name="course_name" id="courseName" required>
@@ -80,12 +85,12 @@
                 <!-- Delete form -->
                     <form method="POST">
                         <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="event_id" id="deleteEventID">
+                        <input type="hidden" name="event_id" id="deleteEventId">
                         <button type="submit" class="submit-btn"><i class="fa-solid fa-trash-can"></i> Delete</button>
                     </form>
 
                     <!-- Cancel action -->
-                    <button type="button" class="submit-btn"><i class="fa-solid fa-square-xmark"></i> Cancel</button>
+                    <button type="button" class="submit-btn" id="cancelButton"><i class="fa-solid fa-square-xmark"></i> Cancel</button>
             </div>
          </div>
 
@@ -94,8 +99,12 @@
 
     <!-- Font Awesome icon kit -->
      <script src="https://kit.fontawesome.com/3362ba5870.js" crossorigin="anonymous"></script>
+     <!-- Encode events from database -->
+     <script>
+        const events = <?php echo json_encode($eventsFromDB, JSON_UNESCAPED_UNICODE); ?>;
+    </script>
     <!-- Calendar script -->
-     <script src="caldendar.js"></script>
+     <script src="calendar.js" defer></script>
     </body>
 
 

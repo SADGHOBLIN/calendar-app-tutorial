@@ -3,7 +3,6 @@ const monthYearEl = document.getElementById("monthYear");
 const modalEl = document.getElementById("eventModal");
 let currentDate = new Date();
 
-
 //Render Calendar
 function renderCalendar(date = new Date()) {
     calendarEl.innerHTML = '';
@@ -13,7 +12,8 @@ function renderCalendar(date = new Date()) {
     const today = new Date();
 
     const totalDays = new Date(year, month + 1, 0).getDate();
-    const firstDayOfMonth = new Date(year, month, 1).getDate();
+    let firstDayOfMonth = new Date(year, month, 1).getDay();
+    if (firstDayOfMonth === 0) firstDayOfMonth = 7;
 
     // Display the month and year
     monthYearEl.textContent = date.toLocaleDateString("en", {
@@ -41,7 +41,7 @@ function renderCalendar(date = new Date()) {
         cell.className = "day";
 
         if (
-            day === today.getDate &&
+            day === today.getDate() &&
             month === today.getMonth() &&
             year === today.getFullYear()
         ) {
@@ -73,7 +73,7 @@ function renderCalendar(date = new Date()) {
 
             const timeEl = document.createElement("div");
             timeEl.className = "time";
-            timeEl.textContent = "Time: " + event.start_time + " - " + event.end_time();
+            timeEl.textContent = "Time: " + event.start_time + " - " + event.end_time;
 
             ev.appendChild(courseEl);
             ev.appendChild(instructorEl);
@@ -84,7 +84,7 @@ function renderCalendar(date = new Date()) {
          // Overlay buttons
          
          const overlay = document.createElement("div");
-         overlay.ClassName = "day-overlay";
+         overlay.className = "day-overlay";
 
          const addBtn = document.createElement("button");
          addBtn.className = "overlay-btn";
@@ -103,7 +103,7 @@ function renderCalendar(date = new Date()) {
             editBtn.textContent = "Edit";
             editBtn.onclick = e => {
                 e.stopPropagation();
-                openModalForEdit(eventsToday);
+                openModalForEdit(eventToday);
             };
 
             overlay.appendChild(editBtn);
@@ -154,7 +154,7 @@ function openModalForEdit(eventsOnDate) {
         selector.appendChild(option)
     });
 
-    if (eventsOnDate > 1) {
+    if (eventsOnDate.length > 1) {
         wrapper.style.display = "block";
     } else {
         wrapper.style.display = "none";
@@ -193,15 +193,38 @@ function changeMonth(offset) {
 // Live digital clock
 function updateClock() {
     const now = new Date();
-    const click = document.getElementById("clock");
-    updateClock.textContent = [
+    const clock = document.getElementById("clock");
+    clock.textContent = [
         now.getHours().toString().padStart(2, "0"),
         now.getMinutes().toString().padStart(2, "0"),
         now.getSeconds().toString().padStart(2, "0"),
     ].join(":");
 }
 
-// Initialise
+// Initialise when ready
+
+document.addEventListener("DOMContentLoaded", () => {
 renderCalendar(currentDate);
 updateClock();
 setInterval(updateClock, 1000);
+
+// Close Modal
+document.getElementById("cancelButton").addEventListener("click", closeModal);
+window.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+});
+
+modalEl.addEventListener("click", e => {
+    if (e.target === modalEl) closeModal();
+});
+
+// Change month
+ document.getElementById("prevMonthBtn").addEventListener("click", () => {
+        changeMonth(-1);
+    });
+
+document.getElementById("nextMonthBtn").addEventListener("click", () => {
+        changeMonth(1);
+    });
+
+});
